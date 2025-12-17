@@ -1,3 +1,153 @@
+# 📝 Todo App
+
+A modern **Todo Application** built using **React + Vite**, styled with **Tailwind CSS**, and powered by a simple JSON backend for learning and practice purposes.
+
+This project helps you understand **CRUD operations**, component-based UI, and basic frontend project structure.
+
+---
+
+## 🚀 Features
+
+* ✅ Add new todos
+* ✏️ Edit existing todos
+* 🗑️ Delete todos
+* 📋 View all todos
+* 🎨 Clean and responsive UI with Tailwind CSS
+
+---
+
+## 🛠️ Tech Stack
+
+* **Frontend:** React (Vite)
+* **Styling:** Tailwind CSS
+* **State Management:** React Hooks
+* **Backend (Mock):** `db.json`
+* **Package Manager:** npm
+
+---
+
+## 📂 Project Structure
+
+```
+todo-app/
+├── public/
+├── src/
+│   ├── components/
+│   ├── pages/
+│   ├── App.jsx
+│   └── main.jsx
+├── db.json
+├── index.html
+├── package.json
+├── vite.config.js
+├── tailwind.config.js
+└── README.md
+```
+
+---
+
+## ⚙️ Installation & Setup
+
+### 1️⃣ Clone the repository
+
+```bash
+git clone https://github.com/soubhagya2/todo-app.git
+cd todo-app
+```
+
+### 2️⃣ Install dependencies
+
+```bash
+npm install
+```
+
+### 3️⃣ Run the development server
+
+```bash
+npm run dev
+```
+
+Open your browser at:
+
+```
+http://localhost:5173
+```
+
+---
+
+## 🧪 Backend (Optional – JSON Server)
+
+If you are using `db.json` with JSON Server:
+
+```bash
+npx json-server --watch db.json --port 3000
+```
+
+API will run at:
+
+```
+http://localhost:3000
+```
+
+---
+
+## 📦 Build for Production
+
+```bash
+npm run build
+```
+
+---
+
+## 🧹 Git Ignore
+
+The following files are ignored:
+
+* `node_modules/`
+* `dist/`
+* `.env`
+
+---
+
+## 📌 Learning Goals
+
+* React fundamentals
+* Component structure
+* Props & state
+* CRUD operations
+* Git & GitHub workflow
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome!
+
+1. Fork the repo
+2. Create a new branch
+3. Commit your changes
+4. Push and create a PR
+
+---
+
+## 👤 Author
+
+**Soubhagya Rout**
+GitHub: [@soubhagya2](https://github.com/soubhagya2)
+
+---
+
+## 📄 License
+
+This project is for **learning and educational purposes**.
+
+⭐ If you like this project, don’t forget to star the repo!
+
+
+
+
+
+
 # Install React with Vite inside a folder
 > npm create vite@latest . -- --template react
 
