@@ -2,7 +2,7 @@
 
 A modern **Todo Application** built using **React + Vite**, styled with **Tailwind CSS**, and powered by a simple JSON backend for learning and practice purposes.
 
-This project helps you understand **CRUD operations**, component-based UI, and basic frontend project structure.
+This project helps you understand **CRUD operations**, component-based UI, and a complete **frontend development + GitHub workflow**.
 
 ---
 
@@ -13,6 +13,7 @@ This project helps you understand **CRUD operations**, component-based UI, and b
 * 🗑️ Delete todos
 * 📋 View all todos
 * 🎨 Clean and responsive UI with Tailwind CSS
+* 🌙 Optional Dark Mode support
 
 ---
 
@@ -20,8 +21,13 @@ This project helps you understand **CRUD operations**, component-based UI, and b
 
 * **Frontend:** React (Vite)
 * **Styling:** Tailwind CSS
-* **State Management:** React Hooks
-* **Backend (Mock):** `db.json`
+* **State Management:** React Hooks / Redux Toolkit
+* **Routing:** React Router DOM
+* **HTTP Client:** Axios
+* **Forms & Validation:** Formik + Yup
+* **UI Libraries:** Font Awesome, Material UI
+* **Calendar:** react-calendar / react-day-picker
+* **Backend (Mock):** JSON Server (`db.json`)
 * **Package Manager:** npm
 
 ---
@@ -34,6 +40,7 @@ todo-app/
 ├── src/
 │   ├── components/
 │   ├── pages/
+│   ├── store/          # redux store (if used)
 │   ├── App.jsx
 │   └── main.jsx
 ├── db.json
@@ -41,6 +48,7 @@ todo-app/
 ├── package.json
 ├── vite.config.js
 ├── tailwind.config.js
+├── .gitignore
 └── README.md
 ```
 
@@ -61,13 +69,13 @@ cd todo-app
 npm install
 ```
 
-### 3️⃣ Run the development server
+### 3️⃣ Start the development server
 
 ```bash
 npm run dev
 ```
 
-Open your browser at:
+Open in browser:
 
 ```
 http://localhost:5173
@@ -75,18 +83,79 @@ http://localhost:5173
 
 ---
 
-## 🧪 Backend (Optional – JSON Server)
+## 🧪 Backend Setup (Optional – JSON Server)
 
-If you are using `db.json` with JSON Server:
+If using `db.json` as a mock backend:
 
 ```bash
 npx json-server --watch db.json --port 3000
 ```
 
-API will run at:
+API runs at:
 
 ```
 http://localhost:3000
+```
+
+---
+
+## 🎨 Tailwind CSS Setup (Vite)
+
+### Install Tailwind
+
+```bash
+npm install tailwindcss @tailwindcss/vite
+```
+
+### Update `vite.config.js`
+
+```js
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import tailwindcss from '@tailwindcss/vite'
+
+export default defineConfig({
+  plugins: [react(), tailwindcss()],
+})
+```
+
+### Add to `index.css`
+
+```css
+@import "tailwindcss";
+
+/* Dark mode support */
+@custom-variant dark (&:where(.dark, .dark *));
+```
+
+---
+
+## 📦 Additional Libraries Installed
+
+```bash
+# Icons
+npm install @fortawesome/fontawesome-free
+
+# Routing
+npm install react-router-dom
+
+# HTTP Client
+npm install axios
+
+# Forms & Validation
+npm install formik yup
+
+# Calendar
+npm install react-calendar react-day-picker
+
+# UI Library
+npm install @mui/material @emotion/react @emotion/styled
+
+# Cookies
+npm install react-cookie
+
+# Redux Toolkit
+npm install @reduxjs/toolkit react-redux
 ```
 
 ---
@@ -101,7 +170,7 @@ npm run build
 
 ## 🧹 Git Ignore
 
-The following files are ignored:
+Ignored files:
 
 * `node_modules/`
 * `dist/`
@@ -112,21 +181,48 @@ The following files are ignored:
 ## 📌 Learning Goals
 
 * React fundamentals
-* Component structure
-* Props & state
+* Component-based architecture
 * CRUD operations
+* State management
+* Routing
 * Git & GitHub workflow
 
 ---
 
-## 🤝 Contributing
+## 🚀 Push Project to GitHub (Correct Steps)
 
-Contributions are welcome!
+```bash
+# 1. Check Git version
+git --version
 
-1. Fork the repo
-2. Create a new branch
-3. Commit your changes
-4. Push and create a PR
+# 2. Verify project folder
+pwd
+ls
+
+# 3. Initialize Git (only once)
+git init
+
+# 4. Add files
+git add .
+
+# 5. Check status
+git status
+
+# 6. Commit changes
+git commit -m "Initial commit"
+
+# 7. Add remote repository
+git remote add origin https://github.com/soubhagya2/todo-app.git
+git remote -v
+
+# 8. Pull remote history safely
+git stash
+git pull origin main --allow-unrelated-histories
+git stash pop
+
+# 9. Push to GitHub
+git push -u origin main
+```
 
 ---
 
@@ -139,111 +235,6 @@ GitHub: [@soubhagya2](https://github.com/soubhagya2)
 
 ## 📄 License
 
-This project is for **learning and educational purposes**.
+This project is for **learning and educational purposes only**.
 
-⭐ If you like this project, don’t forget to star the repo!
-
-
-
-
-
-
-# Install React with Vite inside a folder
-> npm create vite@latest . -- --template react
-
-
-## Install Tailwindcss for vite
-> npm install tailwindcss @tailwindcss/vite
-
-### Then go to vite.config.js and add
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import tailwindcss from '@tailwindcss/vite'
-
-export default defineConfig({
-  plugins: [react(), tailwindcss(),],
-  
-})
-
-### Then add  to index.css file
-> @import "tailwindcss";
-
-### To make dark mode work add to index.css file
-> @custom-variant dark (&:where(.dark, .dark *));
-
-## Install fontawsome icons 
-> npm install @fortawesome/fontawesome-free
-### Then add to index.css file
-> @import '@fortawesome/fontawesome-free/css/all.css';
-
-## React Router DOM installation
-> npm install react-router-dom
-
-### Add to main.jsx
-> import { BrowserRouter } from "react-router-dom";
-
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>
-
-### Add to App.jsx
-> import { Routes, Route, Link } from "react-router-dom";
-
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-      </Routes>
-
-## Install calender library to make calender simpler
-> npm install react-calendar
-
-## Install Material UI (MUI) in a React project
- > npm install @mui/material @emotion/react @emotion/styled
-
-## Install Axios library
-> npm install axios
-
-## Install Formik for form validation
-> npm install formik
-
-## Install yup for form validation
->npm install yup
-
-
-## Install React cookies library
-> npm install react-cookie
-
-## To use Calender
-> npm install react-day-picker
-
-## Install redux toolkit
->npm install @reduxjs/toolkit react-redux
-
-
-## Push to git hub
-> Step : 1  Check the github version 
- #### git --version
- >Step : 2 check folder name
- #### pwd
- >Step : 3 what upload to git hub
- #### ls
- >Step : 4 Update gitignore file
- #### touch .gitignore
- #### notepad .gitignore
- Copy from notepad and paste to .gitignore
->Step : 4 git add 
-#### git add .
->Step : 5 check git file
-#### it status
->Step : 6 Initialize git repo
-#### git commit -m "Initial commit"
->Step : 7 Add remote file
-#### git remote add origin https://github.com/soubhagya2/todo-app.git
-#### git remote -v
-#### git pull origin main --no-rebase
-#### git stash
-#### git pull origin main --allow-unrelated-histories
-#### git stash pop
-#### git push -u origin main
-
-
+⭐ If you find this project helpful, please **star the repository**!
