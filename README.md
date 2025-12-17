@@ -68,5 +68,32 @@ export default defineConfig({
 
 ## Install redux toolkit
 >npm install @reduxjs/toolkit react-redux
-# todo-app
-Simple todo app to create, organize, and track daily tasks
+
+
+## Push to git hub
+> Step : 1  Check the github version 
+ #### git --version
+ >Step : 2 check folder name
+ #### pwd
+ >Step : 3 what upload to git hub
+ #### ls
+ >Step : 4 Update gitignore file
+ #### touch .gitignore
+ #### notepad .gitignore
+ Copy from notepad and paste to .gitignore
+>Step : 4 git add 
+#### git add .
+>Step : 5 check git file
+#### it status
+>Step : 6 Initialize git repo
+#### git commit -m "Initial commit"
+>Step : 7 Add remote file
+#### git remote add origin https://github.com/soubhagya2/todo-app.git
+#### git remote -v
+#### git pull origin main --no-rebase
+#### git stash
+#### git pull origin main --allow-unrelated-histories
+#### git stash pop
+#### git push -u origin main
+
+
