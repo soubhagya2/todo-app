@@ -68,3 +68,5 @@ export default defineConfig({
 
 ## Install redux toolkit
 >npm install @reduxjs/toolkit react-redux
+# todo-app
+Simple todo app to create, organize, and track daily tasks
