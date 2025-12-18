@@ -7,35 +7,67 @@ import StepIndicator from "./StepIndicator";
 import StepContent from "./StepContent";
 
 const validationSchema = [
-  Yup.object().shape({
-    name: Yup.string().required("Name is required"),
+  //step -1
+  Yup.object({
+    name: Yup.string()
+      .required("Name is required")
+      .min(3, "Name must be at least 3 characters"),
+    profileImage: Yup.mixed()
+      .nullable()
+      .test(
+        "fileSize",
+        "File size is too large (max 2MB)",
+        (file) => !file || file.size <= 2 * 1024 * 1024
+      ),
   }),
-  Yup.object().shape({
-    email: Yup.string().email("Invalid email").required("Email is required"),
-    phone: Yup.string().matches(/^[0-9]{10}$/, "Phone number is not valid"),
+  //step-2
+  Yup.object({
+    email: Yup.string()
+      .required("Email is required")
+      .email("Invalid email address")
+      .test("email-exists", "Email already registered", async (value) => {
+        if (!value) return true;
+        try {
+          const res = await axios.get(`http://localhost:3000/users?email=${value}`);
+          return res.data.length === 0;
+        } catch (error) {
+          return true;
+        }
+      }),
+    phone: Yup.string()
+      .matches(/^[6-9]\d{9}$/, "Invalid Indian phone number")
+      .test("mob exist", "Phone number already registered", async (value) => {
+        if (!value) return true;
+        try {
+          const res = await axios.get(`http://localhost:3000/users?phone=${value}`);
+          return res.data.length === 0;
+        } catch (error) {
+          return true;
+        }
+      }),
   }),
-  Yup.object().shape({
+  //step- 3
+  Yup.object({
     password: Yup.string()
-      .min(8, "Password must be at least 8 characters")
-      .required("Password is required"),
+      .required("Password is required")
+      .min(6, "Password must be at least 6 characters"),
     confirmPassword: Yup.string()
-      .oneOf([Yup.ref("password"), null], "Passwords must match")
-      .required("Confirm Password is required"),
+      .required("Confirm password is required")
+      .oneOf([Yup.ref("password")], "Passwords must match"),
   }),
-  Yup.object().shape({
-    terms: Yup.boolean().oneOf([true], "You must accept the terms and conditions"),
+  //step - 4
+  Yup.object({
+    terms: Yup.boolean().oneOf([true], "You must accept terms & conditions"),
   }),
 ];
 
-
 export default function DoRegistration() {
   const navigate = useNavigate();
-  const [currentStep, setCurrentStep] = useState(1);
-  const [msg, setMsg] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [imagePreview, setImagePreview] = useState(null);
 
-  const steps = [{ name: "Account" }, { name: "Contact" }, { name: "Security" },  { name: "Review" }, ];
+  const [currentStep, setCurrentStep] = useState(1);
+  const steps = ["Account", "Contact", "Security", "Review"];
 
   const formik = useFormik({
     initialValues: {
@@ -48,36 +80,27 @@ export default function DoRegistration() {
       profileImage: null,
     },
     validationSchema: validationSchema[currentStep - 1],
-    onSubmit: (values) => {
+    validateOnChange: false,
+    validateOnBlur: true,
+    onSubmit: async (values) => {
       if (currentStep < steps.length) {
         setCurrentStep((prev) => prev + 1);
       } else {
+        let imageUrl = "";
+        if (values.profileImage) {
+          imageUrl = await ConvertUrl(values.profileImage);
+        }
+        const { confirmPassword, terms, profileImage, ...rest } = values;
+        const dataToSave = { ...rest, profileImage: imageUrl };
         axios
-          .post("http://localhost:3000/users", values)
-          .then(function (response) {})
+          .post("http://localhost:3000/users", dataToSave)
+          .then(() => navigate("/login"))
           .catch(function (error) {
             console.error("Error registering user:", error);
           });
-        navigate("/login");
       }
     },
   });
-
-  function handleValueCheck(e, field) {
-    axios
-      .get("http://localhost:3000/users")
-      .then((response) => {
-        const valueExists = response.data.find(
-          (user) => user[field] === e.target.value
-        );
-        if (valueExists) {
-          setMsg(`${field} is already registered.`);
-        } else {
-          setMsg("user available");
-        }
-      })
-      .catch((err) => console.error("Validation failed:", err));
-  }
 
   function handleBack() {
     if (currentStep > 1) {
@@ -91,13 +114,27 @@ export default function DoRegistration() {
     setImagePreview(URL.createObjectURL(e.target.files[0]));
   }
 
+  function ConvertUrl(file) {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "TodoImage");
+
+    return axios
+      .post("https://api.cloudinary.com/v1_1/dgqvkksup/image/upload", formData)
+      .then((res) => res.data.secure_url);
+  }
+
   return (
     <div>
       <main className="flex flex-col min-h-full items-center py-6 px-4 transition-colors">
         <div className="w-full max-w-4xl mt-6 bg-white dark:bg-[#1A2233]  shadow-xl  overflow-hidden">
           <div className="flex min-h-[500px]">
             <div className="w-1/2 flex items-center justify-center bg-gray-50 dark:bg-[#0F1419]">
-              <img src="/images/regis.jpg" alt="register" className="w-full h-full object-cover"/>
+              <img
+                src="/images/regis.jpg"
+                alt="register"
+                className="w-full h-full object-cover"
+              />
             </div>
 
             <div className="w-1/2 p-6 flex flex-col">
@@ -108,8 +145,6 @@ export default function DoRegistration() {
                   currentStep={currentStep}
                   steps={steps}
                   formik={formik}
-                  handleValueCheck={handleValueCheck}
-                  msg={msg}
                   showPassword={showPassword}
                   setShowPassword={setShowPassword}
                   imagePreview={imagePreview}
@@ -120,6 +155,7 @@ export default function DoRegistration() {
               <div className="flex gap-4">
                 {currentStep > 1 && (
                   <button
+                    type="button"
                     onClick={handleBack}
                     className="flex-1 border rounded-lg py-3 dark:text-white"
                   >
@@ -128,6 +164,7 @@ export default function DoRegistration() {
                 )}
 
                 <button
+                  type="button"
                   onClick={formik.handleSubmit}
                   className="flex-1 bg-blue-500 text-white py-3 rounded-lg font-semibold"
                 >

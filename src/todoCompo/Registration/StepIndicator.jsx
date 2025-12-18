@@ -1,5 +1,5 @@
 
-const StepIndicator = ({ steps, currentStep }) => {
+const StepIndicator = ({ steps = [], currentStep }) => {
   return (
     <div className="w-full mb-4 relative flex items-center justify-between">
       <div className="absolute w-full h-1 bg-gray-300 rounded-full" />
@@ -9,7 +9,7 @@ const StepIndicator = ({ steps, currentStep }) => {
       />
 
       {steps.map((step, index) => (
-        <div key={step.name} className="z-10 text-center">
+        <div key={index} className="z-10 text-center">
           <div
             className={`w-8 h-8 flex items-center justify-center rounded-full font-bold border-4 ${
               index + 1 < currentStep
@@ -30,7 +30,7 @@ const StepIndicator = ({ steps, currentStep }) => {
               index + 1 <= currentStep ? "text-blue-500" : "text-gray-500"
             }`}
           >
-            {step.name}
+            {step}
           </span>
         </div>
       ))}

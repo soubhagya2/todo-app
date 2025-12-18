@@ -31,8 +31,6 @@ const StepContent = ({
   currentStep,
   steps,
   formik,
-  handleValueCheck,
-  msg,
   showPassword,
   setShowPassword,
   imagePreview,
@@ -40,7 +38,7 @@ const StepContent = ({
 }) => {
   const step = steps[currentStep - 1];
 
-  if (step.name === "Review") {
+  if (step === "Review") {
     return (
       <ReviewDetails
         formData={formik.values}
@@ -48,7 +46,7 @@ const StepContent = ({
         formik={formik}
       />
     );
-  } else if (step.name === "Account") {
+  } else if (step === "Account") {
     return (
       <div className="space-y-2">
         <h5 className="font-bold text-xl dark:text-white">Account Details</h5>
@@ -74,7 +72,7 @@ const StepContent = ({
         />
       </div>
     );
-  } else if (step.name === "Contact") {
+  } else if (step === "Contact") {
     return (
       <div className="space-y-2">
         <h5 className="font-bold text-xl dark:text-white">
@@ -93,7 +91,6 @@ const StepContent = ({
           onChange={formik.handleChange("email")}
           onBlur={(e) => {
             formik.handleBlur("email")(e);
-            handleValueCheck(e, "email");
           }}
           iconClass="fa-solid fa-envelope"
           error={formik.errors.email}
@@ -114,7 +111,7 @@ const StepContent = ({
        </div>
       </div>
     );
-  } else if (step.name === "Security") {
+  } else if (step === "Security") {
     return (
       <div className="space-y-2">
         <h5 className="font-bold text-xl dark:text-white">Password Setup</h5>
