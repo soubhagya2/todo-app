@@ -6,10 +6,7 @@ import { useCookies } from "react-cookie";
 
 export default function DoLogin() {
   const [showPassword, setShowPassword] = useState(false);
-  const [cookies, setCookie, removeCookie] = useCookies([
-    "userid",
-    "useremail",
-  ]);
+  const [cookies, setCookie, removeCookie] = useCookies(["userid", "useremail",]);
   const navigate = useNavigate();
 
   const formik = useFormik({
@@ -18,6 +15,7 @@ export default function DoLogin() {
       password: "",
     },
     onSubmit: (user) => {
+      const user = JSON.parse(localStorage.getItem("user") || "[]");
       axios
         .get(`http://localhost:3000/users?email=${user.email}`)
         .then((response) => {

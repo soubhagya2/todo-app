@@ -35,6 +35,22 @@
       "phone": "8455813717",
       "password": "Pintu1234@",
       "profileImage": "https://res.cloudinary.com/dgqvkksup/image/upload/v1766035078/mkkuknxnypychbnsvogq.jpg"
+    },
+    {
+      "id": "f7ef",
+      "name": "Amit",
+      "email": "amit@gmail.com",
+      "phone": "",
+      "password": "Pintu1234@",
+      "profileImage": "https://res.cloudinary.com/dgqvkksup/image/upload/v1766152373/zccawn03uvzu2vpbbfnr.jpg"
+    },
+    {
+      "id": "d3a6",
+      "name": "Amit",
+      "email": "amit@gmail.com",
+      "phone": "",
+      "password": "Pintu1234@",
+      "profileImage": "https://res.cloudinary.com/dgqvkksup/image/upload/v1766152374/zsicnxl03j8qnnjgqlly.jpg"
     }
   ],
   "todos": [

@@ -97,8 +97,8 @@ export default function DoRegistration() {
         }
         const { confirmPassword, terms, profileImage, ...rest } = values;
         const dataToSave = { ...rest, profileImage: imageUrl };
-        axios
-          .post("http://localhost:3000/users", dataToSave)
+        localStorage.setItem("user", JSON.stringify(dataToSave));
+        axios.post("http://localhost:3000/users", dataToSave)
           .then(() => navigate("/login"))
           .catch(function (error) {
             console.error("Error registering user:", error);
