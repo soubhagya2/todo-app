@@ -80,6 +80,7 @@ export default function DoRegistration() {
       profileImage: null,
     },
     validationSchema: validationSchema[currentStep - 1],
+
     validateOnChange: false,
     validateOnBlur: true,
     onSubmit: async (values) => {
