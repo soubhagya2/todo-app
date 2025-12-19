@@ -1,10 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchTasks,
-  addNewTask,
-  updateTask,
-} from "../../slicers/task-slicer";
+import { fetchTasks, addNewTask, updateTask } from "../../slicers/task-slicer";
 
 export function DoMain({ todoId, user }) {
   const dispatch = useDispatch();
@@ -46,11 +42,11 @@ export function DoMain({ todoId, user }) {
   }
 
   return (
-    <div className="p-6 text-gray-900 dark:text-white">
+    <div className="h-full flex flex-col p-2 md:p-6 text-gray-900 dark:text-white">
       {user ? (
         <>
-          <div>
-            <h1 className="text-3xl font-bold">Today's Tasks</h1>
+          <div className="shrink-0">
+            <h1 className="text-2xl md:text-3xl font-bold">Today's Tasks</h1>
             <p className="text-gray-600 dark:text-gray-400 mt-1">
               Good morning,{" "}
               <b className="font-semibold text-gray-900 dark:text-cyan-600">
@@ -59,7 +55,7 @@ export function DoMain({ todoId, user }) {
               . You have {tasks.length} tasks for today.
             </p>
           </div>
-          <div className="mt-6 flex items-center gap-2">
+          <div className="mt-6 flex items-center gap-2 shrink-0">
             <input
               type="text"
               value={addValue}
@@ -74,11 +70,14 @@ export function DoMain({ todoId, user }) {
               <i className="fa-solid fa-plus text-xl"></i>
             </button>
           </div>
-          <div className="mt-6 space-y-2">
+          <div
+            className="mt-6 space-y-2 overflow-y-auto flex-1 min-h-0"
+            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+          >
             {tasks.map((task, index) => (
               <div
                 key={index}
-                className="flex items-center gap-3 p-4 rounded-lg bg-gray-100 dark:bg-gray-800/50 border border-transparent hover:border-gray-300 dark:hover:border-gray-700 cursor-pointer"
+                className="flex items-center gap-3 p-3 md:p-4 rounded-lg bg-gray-100 dark:bg-gray-800/50 border border-transparent hover:border-gray-300 dark:hover:border-gray-700 cursor-pointer transition-all"
               >
                 <input
                   type="checkbox"
@@ -87,7 +86,7 @@ export function DoMain({ todoId, user }) {
                   className="size-5 rounded border-gray-300 dark:border-gray-600 text-blue-500 focus:ring-blue-500 bg-transparent"
                 />
                 <span
-                  className={`${
+                  className={`flex-1 wrap-break-words ${
                     task.completed
                       ? "line-through text-gray-500 dark:text-gray-400"
                       : ""
@@ -100,8 +99,10 @@ export function DoMain({ todoId, user }) {
           </div>
         </>
       ) : (
-        <div className="text-center mt-20">
-          <h1 className="text-3xl font-bold">Welcome to TaskFlow</h1>
+        <div className="text-center mt-10 md:mt-20 px-4">
+          <h1 className="text-2xl md:text-3xl font-bold">
+            Welcome to TaskFlow
+          </h1>
           <p className="text-gray-600 dark:text-gray-400 mt-2">
             Please log in to manage your tasks.
           </p>
@@ -110,5 +111,3 @@ export function DoMain({ todoId, user }) {
     </div>
   );
 }
-
-       

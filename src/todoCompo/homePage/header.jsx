@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-export function DoHeader({ isLanding = false }) {
+export function DoHeader({ isLanding = false, toggleSidebar }) {
   const navigate = useNavigate();
   const [searchValue, setSearchValue] = useState("");
 
@@ -18,22 +18,38 @@ export function DoHeader({ isLanding = false }) {
     <header className="sticky top-0 z-50 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-gray-900/90 transition-all duration-300">
       <div className="w-full px-4 py-1 sm:px-8">
         <div className="flex items-center justify-between h-16 gap-4">
-
+          {!isLanding && (
+            <button
+              onClick={toggleSidebar}
+              className="md:hidden p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg -ml-2"
+            >
+              <i className="fa-solid fa-bars text-xl"></i>
+            </button>
+          )}
           {/* LEFT — BRAND */}
           <Link to="/" className="flex items-center gap-2 shrink-0">
             <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center shadow-sm">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="white"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
                 <path d="M9 11l3 3L22 4" />
                 <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
               </svg>
             </div>
-            <span className="text-xl font-bold text-gray-900 dark:text-white tracking-tight">
+            <span className="text-xl font-bold text-gray-900 dark:text-white tracking-tight hidden sm:block">
               DoTask
             </span>
           </Link>
 
           {/* CENTER — NAV or SEARCH */}
-          <div className="flex-1 flex justify-center max-w-3xl px-4">
+          <div className="flex-1 flex justify-center max-w-3xl px-2 md:px-4">
             {isLanding ? (
               <nav className="hidden md:flex items-center gap-8">
                 {["About", "Features", "Pricing"].map((item) => (
@@ -63,9 +79,9 @@ export function DoHeader({ isLanding = false }) {
                     value={searchValue}
                     onChange={(e) => setSearchValue(e.target.value)}
                     placeholder="Search tasks..."
-                    className="w-full h-full pl-10 pr-24 bg-gray-100 dark:bg-gray-800 border-none rounded-xl text-sm text-gray-900 dark:text-white placeholder-gray-500 focus:outline-none focus:bg-white dark:focus:bg-gray-950 transition-colors"
+                    className="w-full h-full pl-10 pr-4 md:pr-24 bg-gray-100 dark:bg-gray-800 border-none rounded-xl text-sm text-gray-900 dark:text-white placeholder-gray-500 focus:outline-none focus:bg-white dark:focus:bg-gray-950 transition-colors"
                   />
-                  <button className="absolute right-1 top-1 bottom-1 px-4 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-lg transition-colors">
+                  <button className="hidden md:block absolute right-1 top-1 bottom-1 px-4 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-lg transition-colors">
                     Search
                   </button>
                 </div>
@@ -108,7 +124,6 @@ export function DoHeader({ isLanding = false }) {
               </button>
             )}
           </div>
-
         </div>
       </div>
     </header>
