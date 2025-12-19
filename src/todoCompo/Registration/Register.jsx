@@ -135,8 +135,8 @@ export default function DoRegistration() {
     <div>
       <main className="flex flex-col min-h-full items-center py-6 px-4 transition-colors">
         <div className="w-full max-w-4xl mt-6 bg-white dark:bg-[#1A2233]  shadow-xl  overflow-hidden">
-          <div className="flex min-h-[500px]">
-            <div className="w-1/2 flex items-center justify-center bg-gray-50 dark:bg-[#0F1419]">
+          <div className="flex flex-col md:flex-row min-h-[500px]">
+            <div className="hidden md:flex md:w-1/2 items-center justify-center bg-gray-50 dark:bg-[#0F1419]">
               <img
                 src="/images/regis.jpg"
                 alt="register"
@@ -144,7 +144,7 @@ export default function DoRegistration() {
               />
             </div>
 
-            <div className="w-1/2 p-6 flex flex-col">
+            <div className="w-full md:w-1/2 p-6 flex flex-col">
               <StepIndicator steps={steps} currentStep={currentStep} />
 
               <div className="flex-1 overflow-y-auto mb-4">
