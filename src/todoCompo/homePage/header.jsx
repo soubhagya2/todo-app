@@ -48,7 +48,6 @@ export function DoHeader({ isLanding = false, toggleSidebar }) {
             </span>
           </Link>
 
-          {/* CENTER — NAV or SEARCH */}
           <div className="flex-1 flex justify-center max-w-3xl px-2 md:px-4">
             {isLanding ? (
               <nav className="hidden md:flex items-center gap-8">
@@ -103,7 +102,7 @@ export function DoHeader({ isLanding = false, toggleSidebar }) {
               <>
                 <Link
                   to="/login"
-                  className="hidden md:block text-sm font-medium text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white px-2"
+                  className=" md:block text-sm font-medium text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white px-2"
                 >
                   Log in
                 </Link>
