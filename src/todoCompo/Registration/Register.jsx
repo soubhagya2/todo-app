@@ -99,7 +99,6 @@ export default function DoRegistration() {
         }
         const { confirmPassword, terms, profileImage, ...rest } = values;
         const dataToSave = { ...rest, profileImage: imageUrl };
-        localStorage.setItem("user", JSON.stringify(dataToSave));
         axios
           .post("http://localhost:3000/users", dataToSave)
           .then(() => navigate("/login"))
