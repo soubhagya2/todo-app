@@ -37,7 +37,10 @@ const validationSchema = [
         }
       }),
     phone: Yup.string()
-      .matches(/^[6-9]\d{9}$/, "Invalid Indian phone number")
+      .test("is-valid-phone", "Invalid Indian phone number", (value) => {
+        if (!value) return true;
+        return /^[6-9]\d{9}$/.test(value);
+      })
       .test("mob exist", "Phone number already registered", async (value) => {
         if (!value) return true;
         try {
@@ -84,7 +87,6 @@ export default function DoRegistration() {
       profileImage: null,
     },
     validationSchema: validationSchema[currentStep - 1],
-
     validateOnChange: false,
     validateOnBlur: true,
     onSubmit: async (values) => {
@@ -98,7 +100,8 @@ export default function DoRegistration() {
         const { confirmPassword, terms, profileImage, ...rest } = values;
         const dataToSave = { ...rest, profileImage: imageUrl };
         localStorage.setItem("user", JSON.stringify(dataToSave));
-        axios.post("http://localhost:3000/users", dataToSave)
+        axios
+          .post("http://localhost:3000/users", dataToSave)
           .then(() => navigate("/login"))
           .catch(function (error) {
             console.error("Error registering user:", error);
@@ -133,8 +136,8 @@ export default function DoRegistration() {
     <div>
       <main className="flex flex-col min-h-full items-center py-6 px-4 transition-colors">
         <div className="w-full max-w-4xl mt-6 bg-white dark:bg-[#1A2233]  shadow-xl  overflow-hidden">
-          <div className="flex flex-col md:flex-row min-h-[500px]">
-            <div className="hidden md:flex md:w-1/2 items-center justify-center bg-gray-50 dark:bg-[#0F1419]">
+          <div className="flex min-h-[500px]">
+            <div className="w-1/2 flex items-center justify-center bg-gray-50 dark:bg-[#0F1419]">
               <img
                 src="/images/regis.jpg"
                 alt="register"
@@ -142,7 +145,7 @@ export default function DoRegistration() {
               />
             </div>
 
-            <div className="w-full md:w-1/2 p-6 flex flex-col">
+            <div className="w-1/2 p-6 flex flex-col">
               <StepIndicator steps={steps} currentStep={currentStep} />
 
               <div className="flex-1 overflow-y-auto mb-4">
@@ -169,7 +172,7 @@ export default function DoRegistration() {
                 )}
 
                 <button
-                  type="button"
+                  type="submit"
                   onClick={formik.handleSubmit}
                   className="flex-1 bg-blue-500 text-white py-3 rounded-lg font-semibold"
                 >

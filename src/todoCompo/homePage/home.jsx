@@ -27,6 +27,15 @@ export function Home() {
             .then((todoResponse) => {
               if (todoResponse.data.length > 0) {
                 setTodoId(todoResponse.data[0].id);
+              } else {
+                axios
+                  .post("http://localhost:3000/todos", {
+                    user_email: response.data.email,
+                    tasks: [],
+                  })
+                  .then((res) => {
+                    setTodoId(res.data.id);
+                  });
               }
             });
         });

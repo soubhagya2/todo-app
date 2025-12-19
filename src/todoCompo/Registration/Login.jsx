@@ -15,7 +15,7 @@ export default function DoLogin() {
       password: "",
     },
     onSubmit: (user) => {
-      const user = JSON.parse(localStorage.getItem("user") || "[]");
+      
       axios
         .get(`http://localhost:3000/users?email=${user.email}`)
         .then((response) => {
