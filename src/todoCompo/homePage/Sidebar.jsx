@@ -22,11 +22,16 @@ export function Sidebar({ tasks = [], user, onClose }) {
         {cookies.useremail ? (
           <div className="flex items-center gap-4">
             {/* Avatar */}
-            <Link
-              
-              className="shrink-0 size-12 rounded-full bg-linear-to-br from-blue-500 to-purple-600 flex items-center justify-center shadow-md"
-            >
-              <i className="fa-regular fa-user text-white text-lg" />
+            <Link className="shrink-0 size-12 rounded-full bg-linear-to-br from-blue-500 to-purple-600 flex items-center justify-center shadow-md overflow-hidden">
+              {user?.profileImage ? (
+                <img
+                  src={user.profileImage}
+                  alt="Profile"
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <i className="fa-regular fa-user text-white text-lg" />
+              )}
             </Link>
 
             {/* User Info */}
