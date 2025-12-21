@@ -23,7 +23,7 @@ export function Sidebar({ tasks = [], user, onClose }) {
           <div className="flex items-center gap-4">
             {/* Avatar */}
             <Link
-              to="/profile"
+              
               className="shrink-0 size-12 rounded-full bg-linear-to-br from-blue-500 to-purple-600 flex items-center justify-center shadow-md"
             >
               <i className="fa-regular fa-user text-white text-lg" />
