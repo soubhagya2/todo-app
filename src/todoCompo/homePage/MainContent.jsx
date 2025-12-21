@@ -1,19 +1,8 @@
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchTasks, addNewTask, updateTask } from "../../slicers/task-slicer";
+import { useState } from "react";
+import axios from "axios";
 
-export function DoMain({ todoId, user }) {
-  const dispatch = useDispatch();
-  const tasks = useSelector((state) => state.tasks.tasks);
-  const taskStatus = useSelector((state) => state.tasks.status);
-
+export function DoMain({ todoId, user, tasks, setTasks }) {
   const [addValue, setAddValue] = useState("");
-
-  useEffect(() => {
-    if (taskStatus === "idle" && todoId) {
-      dispatch(fetchTasks(todoId));
-    }
-  }, [taskStatus, dispatch, todoId]);
 
   function handleCheckboxClick(index) {
     const updatedTasks = [...tasks];
@@ -21,14 +10,16 @@ export function DoMain({ todoId, user }) {
       ...updatedTasks[index],
       completed: !updatedTasks[index].completed,
     };
-    dispatch(updateTask({ todoId, tasks: updatedTasks }));
+    axios
+      .patch(`http://localhost:3000/todos/${todoId}`, { tasks: updatedTasks })
+      .then(() => setTasks(updatedTasks));
   }
 
   function handleAddTask() {
     if (!addValue.trim() || !todoId) return;
 
     const newTask = {
-      id: `t${String(Math.floor(10 + Math.random() * 90))}`,
+      id: `t${Date.now()}`,
       title: addValue,
       completed: false,
       description: "",
@@ -37,8 +28,13 @@ export function DoMain({ todoId, user }) {
       reminder: false,
     };
 
-    dispatch(addNewTask({ todoId, task: [...tasks, newTask] }));
-    setAddValue("");
+    const updatedTasks = [...tasks, newTask];
+    axios
+      .patch(`http://localhost:3000/todos/${todoId}`, { tasks: updatedTasks })
+      .then(() => {
+        setTasks(updatedTasks);
+        setAddValue("");
+      });
   }
 
   return (

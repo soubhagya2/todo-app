@@ -13,7 +13,7 @@
     {
       "id": "394e",
       "name": "Pintu",
-      "email": "rout@gmai.com",
+      "email": "rout@gmail.com",
       "phone": "",
       "password": "pin",
       "confirmPassword": "pin",
@@ -63,8 +63,7 @@
   ],
   "todos": [
     {
-      "id": "6f7f",
-      "user_email": "rout@gmail.com",
+      "id": "rout@gmail.com",
       "tasks": [
         {
           "id": "t01",
@@ -114,90 +113,18 @@
       ]
     },
     {
+      "id": "soubhagya@gmail.com",
       "tasks": [
         {
-          "id": "t01",
-          "title": "Review final project proposal",
-          "completed": true,
-          "description": "Check formatting + client feedback",
-          "due_date": "2025-12-11",
-          "priority": "high",
-          "reminder": false
-        },
-        {
-          "id": "t02",
-          "title": "Send invoice to client",
-          "completed": true,
-          "description": "",
-          "due_date": "2025-12-07",
-          "priority": "medium",
-          "reminder": false
-        },
-        {
-          "id": "t03",
-          "title": "Prepare for team meeting",
-          "completed": false,
-          "description": "Slides already prepared",
-          "due_date": "2025-12-07",
-          "priority": "low",
-          "reminder": false
-        },
-        {
-          "id": "t26",
-          "title": "to do app",
+          "id": "t1766303544447",
+          "title": "vxdfvf",
           "completed": false,
           "description": "",
-          "due_date": "2025-12-08",
-          "priority": "medium",
-          "reminder": false
-        },
-        {
-          "id": "t79",
-          "title": "vdfvds",
-          "completed": false,
-          "description": "",
-          "due_date": "2025-12-17",
-          "priority": "medium",
-          "reminder": false
-        },
-        {
-          "id": "t32",
-          "title": "bfdbf",
-          "completed": false,
-          "description": "",
-          "due_date": "2025-12-19",
-          "priority": "medium",
-          "reminder": false
-        },
-        {
-          "id": "t64",
-          "title": "bdfbdf",
-          "completed": false,
-          "description": "",
-          "due_date": "2025-12-19",
-          "priority": "medium",
-          "reminder": false
-        },
-        {
-          "id": "t86",
-          "title": "dfbdf",
-          "completed": false,
-          "description": "",
-          "due_date": "2025-12-19",
-          "priority": "medium",
-          "reminder": false
-        },
-        {
-          "id": "t78",
-          "title": "fbfd",
-          "completed": false,
-          "description": "",
-          "due_date": "2025-12-19",
+          "due_date": "2025-12-21",
           "priority": "medium",
           "reminder": false
         }
-      ],
-      "id": "129b"
+      ]
     }
   ]
 }

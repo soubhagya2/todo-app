@@ -1,30 +1,52 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
+import { toast, ToastContainer } from "react-toastify";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 
 export default function DoLogin() {
   const [showPassword, setShowPassword] = useState(false);
-  const [cookies, setCookie, removeCookie] = useCookies(["userid", "useremail",]);
+  const [cookies, setCookie, removeCookie] = useCookies([
+    "userid",
+    "useremail",
+  ]);
   const navigate = useNavigate();
 
   const formik = useFormik({
-    initialValues: {
-      email: "",
-      password: "",
-    },
+    initialValues: { email: "", password: "" },
     onSubmit: (user) => {
-      
       axios
         .get(`http://localhost:3000/users?email=${user.email}`)
         .then((response) => {
           if (response.data.length > 0) {
             const userObj = response.data[0];
+
             if (userObj.password === user.password) {
               setCookie("userid", userObj.id);
               setCookie("useremail", userObj.email);
-              navigate("/home");
+
+              // Check if todos exist for this user
+              axios
+                .get(`http://localhost:3000/todos?id=${userObj.email}`)
+                .then((res) => {
+                  if (res.data.length === 0) {
+                    // Create empty todos object if missing
+                    axios
+                      .post("http://localhost:3000/todos", {
+                        id: userObj.email,
+                        tasks: [],
+                      })
+                      .then(() => navigate("/home"))
+                      .catch((err) => toast.error("Error creating todos."));
+                  } else {
+                    //Todos already exist, go directly to home
+                    navigate("/home");
+                  }
+                })
+                .catch((err) => {
+                  toast.error("Error fetching todos.");
+                });
             } else {
               alert("Invalid credentials. Please try again.");
             }
@@ -34,13 +56,16 @@ export default function DoLogin() {
         })
         .catch((err) => {
           console.error("Login failed:", err);
-          alert("An error occurred during login. Please try again later.");
+          toast.error(
+            "An error occurred during login. Please try again later."
+          );
         });
     },
   });
 
   return (
     <div>
+      <ToastContainer position="top-right" autoClose={3000} />
       <main className="flex min-h-full items-center justify-center py-6 px-4 transition-colors">
         <div className="w-full mt-6 max-w-4xl bg-white dark:bg-[#1A2233] shadow-xl overflow-hidden">
           <div className="flex flex-col md:flex-row min-h-[500px]">

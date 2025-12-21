@@ -5,13 +5,12 @@ import { Sidebar } from "./Sidebar";
 import { useCookies } from "react-cookie";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useSelector } from "react-redux";
 
 export function Home() {
   const [cookies] = useCookies(["userid", "useremail"]);
   const [user, setUser] = useState(null);
   const [todoId, setTodoId] = useState(null);
-  const tasks = useSelector((state) => state.tasks.tasks);
+  const [tasks, setTasks] = useState([]);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   useEffect(() => {
@@ -21,16 +20,14 @@ export function Home() {
         .then((response) => {
           setUser(response.data);
           axios
-            .get(
-              `http://localhost:3000/todos?user_email=${response.data.email}`
-            )
+            .get(`http://localhost:3000/todos?id=${response.data.email}`)
             .then((todoResponse) => {
               if (todoResponse.data.length > 0) {
                 setTodoId(todoResponse.data[0].id);
               } else {
                 axios
                   .post("http://localhost:3000/todos", {
-                    user_email: response.data.email,
+                    id: response.data.email,
                     tasks: [],
                   })
                   .then((res) => {
@@ -41,6 +38,14 @@ export function Home() {
         });
     }
   }, [cookies.userid]);
+
+  useEffect(() => {
+    if (todoId) {
+      axios
+        .get(`http://localhost:3000/todos/${todoId}`)
+        .then((res) => setTasks(res.data.tasks || []));
+    }
+  }, [todoId]);
 
   return (
     <div className="h-screen supports-[height:100dvh]:h-dvh flex flex-col bg-gray-100 dark:bg-gray-900 overflow-hidden">
@@ -74,7 +79,12 @@ export function Home() {
         </div>
 
         <main className="flex-1 w-full min-w-0 min-h-0">
-          <DoMain todoId={todoId} user={user} />
+          <DoMain
+            todoId={todoId}
+            user={user}
+            tasks={tasks}
+            setTasks={setTasks}
+          />
         </main>
 
         <div className="hidden lg:block w-[300px] shrink-0">

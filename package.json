@@ -8,7 +8,8 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "db": "npx json-server db.json --watch"
+    "db": "npx json-server db.json --watch",
+    "start": "npx json-server --watch db.json --host 0.0.0.0 --port $PORT"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -27,6 +28,7 @@
     "react-dom": "^19.2.0",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.10.1",
+    "react-toastify": "^11.0.5",
     "tailwindcss": "^4.1.17",
     "yup": "^1.7.1"
   },

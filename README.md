@@ -156,6 +156,10 @@ npm install react-cookie
 
 # Redux Toolkit
 npm install @reduxjs/toolkit react-redux
+
+# install toast
+npm install react-toastify
+
 ```
 
 ---
