@@ -29,7 +29,7 @@ const validationSchema = [
         if (!value) return true;
         try {
           const res = await axios.get(
-            `http://localhost:3000/users?email=${value}`
+            `https://todo-api-bkdr.onrender.com/users?email=${value}`
           );
           return res.data.length === 0;
         } catch (error) {
@@ -45,7 +45,7 @@ const validationSchema = [
         if (!value) return true;
         try {
           const res = await axios.get(
-            `http://localhost:3000/users?phone=${value}`
+            `https://todo-api-bkdr.onrender.com/users?phone=${value}`
           );
           return res.data.length === 0;
         } catch (error) {
@@ -100,7 +100,7 @@ export default function DoRegistration() {
         const { confirmPassword, terms, profileImage, ...rest } = values;
         const dataToSave = { ...rest, profileImage: imageUrl };
         axios
-          .post("http://localhost:3000/users", dataToSave)
+          .post("https://todo-api-bkdr.onrender.com/users", dataToSave)
           .then(() => navigate("/login"))
           .catch(function (error) {
             console.error("Error registering user:", error);

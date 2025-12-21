@@ -11,7 +11,9 @@ export function DoMain({ todoId, user, tasks, setTasks }) {
       completed: !updatedTasks[index].completed,
     };
     axios
-      .patch(`http://localhost:3000/todos/${todoId}`, { tasks: updatedTasks })
+      .patch(`https://todo-api-bkdr.onrender.com/todos/${todoId}`, {
+        tasks: updatedTasks,
+      })
       .then(() => setTasks(updatedTasks));
   }
 
@@ -30,7 +32,9 @@ export function DoMain({ todoId, user, tasks, setTasks }) {
 
     const updatedTasks = [...tasks, newTask];
     axios
-      .patch(`http://localhost:3000/todos/${todoId}`, { tasks: updatedTasks })
+      .patch(`https://todo-api-bkdr.onrender.com/todos/${todoId}`, {
+        tasks: updatedTasks,
+      })
       .then(() => {
         setTasks(updatedTasks);
         setAddValue("");

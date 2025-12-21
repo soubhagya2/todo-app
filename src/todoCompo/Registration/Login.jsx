@@ -17,7 +17,7 @@ export default function DoLogin() {
     initialValues: { email: "", password: "" },
     onSubmit: (user) => {
       axios
-        .get(`http://localhost:3000/users?email=${user.email}`)
+        .get(`https://todo-api-bkdr.onrender.com/users?email=${user.email}`)
         .then((response) => {
           if (response.data.length > 0) {
             const userObj = response.data[0];
@@ -28,12 +28,14 @@ export default function DoLogin() {
 
               // Check if todos exist for this user
               axios
-                .get(`http://localhost:3000/todos?id=${userObj.email}`)
+                .get(
+                  `https://todo-api-bkdr.onrender.com/todos?id=${userObj.email}`
+                )
                 .then((res) => {
                   if (res.data.length === 0) {
                     // Create empty todos object if missing
                     axios
-                      .post("http://localhost:3000/todos", {
+                      .post("https://todo-api-bkdr.onrender.com/todos", {
                         id: userObj.email,
                         tasks: [],
                       })

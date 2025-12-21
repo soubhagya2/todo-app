@@ -16,17 +16,19 @@ export function Home() {
   useEffect(() => {
     if (cookies.userid) {
       axios
-        .get(`http://localhost:3000/users/${cookies.userid}`)
+        .get(`https://todo-api-bkdr.onrender.com/users/${cookies.userid}`)
         .then((response) => {
           setUser(response.data);
           axios
-            .get(`http://localhost:3000/todos?id=${response.data.email}`)
+            .get(
+              `https://todo-api-bkdr.onrender.com/todos?id=${response.data.email}`
+            )
             .then((todoResponse) => {
               if (todoResponse.data.length > 0) {
                 setTodoId(todoResponse.data[0].id);
               } else {
                 axios
-                  .post("http://localhost:3000/todos", {
+                  .post("https://todo-api-bkdr.onrender.com/todos", {
                     id: response.data.email,
                     tasks: [],
                   })
@@ -42,7 +44,7 @@ export function Home() {
   useEffect(() => {
     if (todoId) {
       axios
-        .get(`http://localhost:3000/todos/${todoId}`)
+        .get(`https://todo-api-bkdr.onrender.com/todos/${todoId}`)
         .then((res) => setTasks(res.data.tasks || []));
     }
   }, [todoId]);
