@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useFormik } from "formik";
 import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import * as Yup from "yup";
 import StepIndicator from "./StepIndicator";
 import StepContent from "./StepContent";
@@ -106,9 +107,8 @@ export default function DoRegistration() {
             dataToSave
           );
           toast.success("Registration Successful");
-          setTimeout(() => {
-            navigate("/login");
-          }, 2000);
+          await new Promise((resolve) => setTimeout(resolve, 2000));
+          navigate("/login");
         } catch (error) {
           toast.error("Error registering user. Please try again.");
         }
@@ -181,9 +181,16 @@ export default function DoRegistration() {
                 <button
                   type="submit"
                   onClick={formik.handleSubmit}
-                  className="flex-1 bg-blue-500 text-white py-3 rounded-lg font-semibold"
+                  disabled={formik.isSubmitting}
+                  className={`flex-1 bg-blue-500 text-white py-3 rounded-lg font-semibold ${
+                    formik.isSubmitting ? "opacity-70 cursor-not-allowed" : ""
+                  }`}
                 >
-                  {currentStep === steps.length ? "Finish" : "Next Step"}
+                  {formik.isSubmitting
+                    ? "Processing..."
+                    : currentStep === steps.length
+                    ? "Finish"
+                    : "Next Step"}
                 </button>
               </div>
 
