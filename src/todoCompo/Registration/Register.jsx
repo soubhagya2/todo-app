@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useFormik } from "formik";
+import { toast, ToastContainer } from "react-toastify";
 import * as Yup from "yup";
 import StepIndicator from "./StepIndicator";
 import StepContent from "./StepContent";
@@ -93,18 +94,24 @@ export default function DoRegistration() {
       if (currentStep < steps.length) {
         setCurrentStep((prev) => prev + 1);
       } else {
-        let imageUrl = "";
-        if (values.profileImage) {
-          imageUrl = await ConvertUrl(values.profileImage);
+        try {
+          let imageUrl = "";
+          if (values.profileImage) {
+            imageUrl = await ConvertUrl(values.profileImage);
+          }
+          const { confirmPassword, terms, profileImage, ...rest } = values;
+          const dataToSave = { ...rest, profileImage: imageUrl };
+          await axios.post(
+            "https://todo-api-bkdr.onrender.com/users",
+            dataToSave
+          );
+          toast.success("Registration Successful");
+          setTimeout(() => {
+            navigate("/login");
+          }, 2000);
+        } catch (error) {
+          toast.error("Error registering user. Please try again.");
         }
-        const { confirmPassword, terms, profileImage, ...rest } = values;
-        const dataToSave = { ...rest, profileImage: imageUrl };
-        axios
-          .post("https://todo-api-bkdr.onrender.com/users", dataToSave)
-          .then(() => navigate("/login"))
-          .catch(function (error) {
-            console.error("Error registering user:", error);
-          });
       }
     },
   });
@@ -133,6 +140,7 @@ export default function DoRegistration() {
 
   return (
     <div>
+      <ToastContainer position="top-right" autoClose={3000} />
       <main className="flex flex-col min-h-full items-center py-6 px-4 transition-colors">
         <div className="w-full max-w-4xl mt-6 bg-white dark:bg-[#1A2233]  shadow-xl  overflow-hidden">
           <div className="flex flex-col md:flex-row min-h-[500px]">

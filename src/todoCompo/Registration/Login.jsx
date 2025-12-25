@@ -57,7 +57,6 @@ export default function DoLogin() {
           }
         })
         .catch((err) => {
-          console.error("Login failed:", err);
           toast.error(
             "An error occurred during login. Please try again later."
           );
